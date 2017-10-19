@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microblog</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
+    <link rel="stylesheet" href="/blog.css">
+  </head>
+  <body>
+    <div id="layout" class="pure-g">
+      <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header">
+          <h1 class="brand-title">Microblog</h1>
+          <h2 class="brand-tagline">A Ruby sample app</h2>
+          <nav class="nav">
+            <ul class="nav-list">
+              <li class="nav-item"><a href="http://ws.uhlig.it/vorlesung" class="pure-button">Vorlesung</a></li>
+              <li class="nav-item"><a href="http://ws.uhlig.it/uebung" class="pure-button">Übung</a></li>
+              <li class="nav-item"><a href="http://ws.uhlig.it/beleg" class="pure-button">Beleg</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+          <div class="posts">
+            <section class="post">
+              <header class="post-header">
+                <form method="POST" class="pure-form">
+                <fieldset>
+                  <legend>New Post</legend>
+                  <input type="text" name="text" size="70" maxlength="140">
+                  <button type="submit" class="pure-button pure-button-primary">Post</button>
+                </fieldset>
+                </form>
+              </header>
+            </section>
+
+            <h1 class="content-subhead">Recent Posts</h1>
+
+            <% entries.each do |entry| %>
+              <section class="post">
+                <header class="post-header">
+                  <p class="post-meta">
+                    <%= entry[:created_at] %>
+                  </p>
+                </header>
+
+                <div class="post-description">
+                  <p><%= entry[:text] %></p>
+                </div>
+              </section>
+            <% end %>
+          </div>
+
+          <div class="footer">
+            <div class="pure-menu pure-menu-horizontal">
+              <ul>
+                <li class="pure-menu-item"><a href="http://ws.uhlig.it/vorlesung" class="pure-menu-link">Vorlesung</a></li>
+                <li class="pure-menu-item"><a href="http://ws.uhlig.it/uebung" class="pure-menu-link">Übung</a></li>
+                <li class="pure-menu-item"><a href="http://ws.uhlig.it/beleg" class="pure-menu-link">Beleg</a></li>
+                <li class="pure-menu-item"><a href="#">(served by <%= hostname %>)</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
