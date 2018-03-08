@@ -22,3 +22,5 @@ namespace :db do
     @db ||= Sequel.connect(ENV.fetch('DB'))
   end
 end
+
+task default: 'db:migrate'
