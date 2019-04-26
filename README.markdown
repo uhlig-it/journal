@@ -1,5 +1,7 @@
 # Journal
 
+[![Build Status](https://travis-ci.org/uhlig-it/journal.svg?branch=master)](https://travis-ci.org/uhlig-it/journal)
+
 Simple HTTP server that serves journal entries from a Postgres DB.
 
 # Development
