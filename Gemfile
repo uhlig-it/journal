@@ -3,12 +3,13 @@
 source 'https://rubygems.org'
 
 gem 'pg'
-gem 'rake'
 gem 'sequel'
 gem 'sinatra'
 
 group 'development' do
+  gem 'pry'
   gem 'rack-test'
+  gem 'rake'
   gem 'rerun'
   gem 'rspec'
   gem 'rubocop'
