@@ -1,3 +1,9 @@
+# frozen_string_literal: true
+
+require 'rspec/core/rake_task'
+require 'rubocop/rake_task'
+RuboCop::RakeTask.new
+
 namespace :db do
   require 'sequel'
 
@@ -23,4 +29,10 @@ namespace :db do
   end
 end
 
-task default: 'db:migrate'
+task default: 'ci'
+
+desc 'Run ci tests'
+task ci: ['rubocop', :spec]
+
+desc 'Run tests'
+RSpec::Core::RakeTask.new
