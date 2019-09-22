@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
-require 'rspec/core/rake_task'
-require 'rubocop/rake_task'
-RuboCop::RakeTask.new
-RSpec::Core::RakeTask.new
+namespace :dev do
+  require 'rspec/core/rake_task'
+  require 'rubocop/rake_task'
+
+  RuboCop::RakeTask.new
+  RSpec::Core::RakeTask.new
+end
 
 namespace :db do
   require 'sequel'
@@ -30,4 +33,4 @@ namespace :db do
   end
 end
 
-task default: ['rubocop', :spec]
+task default: ['dev:rubocop', 'dev:spec']
