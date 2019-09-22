@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-namespace :dev do
+RACK_ENV = ENV['RACK_ENV'].to_s
+
+if RACK_ENV.empty? || RACK_ENV != "production"
   require 'rspec/core/rake_task'
   require 'rubocop/rake_task'
 
