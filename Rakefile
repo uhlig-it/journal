@@ -2,7 +2,7 @@
 
 RACK_ENV = ENV['RACK_ENV'].to_s
 
-if RACK_ENV.empty? || RACK_ENV != "production"
+if RACK_ENV.empty? || RACK_ENV != 'production'
   require 'rspec/core/rake_task'
   require 'rubocop/rake_task'
 
@@ -35,4 +35,4 @@ namespace :db do
   end
 end
 
-task default: ['rubocop', 'spec']
+task default: %w[rubocop spec]
