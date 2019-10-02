@@ -35,4 +35,4 @@ namespace :db do
   end
 end
 
-task default: ['dev:rubocop', 'dev:spec']
+task default: ['rubocop', 'spec']
