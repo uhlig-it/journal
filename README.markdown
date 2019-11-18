@@ -6,33 +6,24 @@ Simple HTTP server that serves journal entries from a Postgres DB.
 
 # Development
 
-```bash
-# create the database
-initdb -D /usr/local/var/postgres-10
+1. Source the `.envrc`, either using `direnv`, or manually with `source .envrc`.
+1. Start the database server with `postgres`; the variables set in the previous step will make sure that the `postgres` directory is used.
+1. Migrate the database:
 
-# start the database server
-postgres -D /usr/local/var/postgres-10
+   ```command
+   bundle exec rake db:migrate
+   ```
 
-# create the dev database
-createdb journal
+1. Run the app:
 
-# configure the DB URI
-export DB=postgres://localhost/journal
-
-# migrate the database
-bundle exec rake db:migrate
-
-# configure the HTTP port
-export PORT=4567
-
-# run the app
-rerun bundle exec ruby app.rb
-```
+   ```command
+   rerun bundle exec ruby app.rb
+   ```
 
 # Troubleshooting
 
 ## Use the `sequel` database monitor
 
-```bash
+```command
 $ bundle exec sequel $DB
 ```
