@@ -35,4 +35,16 @@ namespace :db do
   end
 end
 
+namespace :docker do
+  desc 'Build the image'
+  task :build do
+    sh 'docker build -t suhlig/journal:latest .'
+  end
+
+  desc 'Publish the image'
+  task push: [:build] do
+    sh 'docker push suhlig/journal'
+  end
+end
+
 task default: %w[rubocop spec]

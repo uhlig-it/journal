@@ -6,6 +6,8 @@ require 'socket'
 
 DB = Sequel.connect(ENV.fetch('DB'))
 
+set :bind, '0.0.0.0'
+
 get '/' do
   erb :index
 end

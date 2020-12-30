@@ -1,0 +1,57 @@
+AllCops:
+  TargetRubyVersion: 3.0
+  Include:
+    - '**/Gemfile'
+    - '**/Guardfile'
+    - '**/*.gemspec'
+    - '**/Rakefile'
+    - 'exe/*'
+  Exclude:
+    - vendor/**/*
+    - db/migrations/**/*
+
+  DisplayCopNames:
+    Enabled: true
+
+  DisplayStyleGuide:
+    Enabled: true
+
+  NewCops: enable
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
+Layout/LineLength:
+  Max: 180
+
+Metrics/MethodLength:
+  Max: 60
+
+Style/MixinUsage:
+  Enabled: false
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Style/ExponentialNotation:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
