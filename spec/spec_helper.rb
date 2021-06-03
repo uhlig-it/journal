@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'capybara/rspec'
+
 ENV['RACK_ENV'] = 'test'
 ENV['DB'] = 'mock://postgres'
 
