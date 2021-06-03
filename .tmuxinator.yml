@@ -1,0 +1,20 @@
+name: <%= File.basename(Dir.pwd) %>
+
+on_project_start:
+  - bundle install
+  - pg_ctl start
+  - bundle exec rake db:migrate
+
+on_project_stop: pg_ctl stop
+
+windows:
+  - console:
+      panes:
+        -
+  - app:
+      panes:
+        - rerun bundle exec ruby app.rb
+  - db:
+      panes:
+        - psql "$DB"
+        - sequel "$DB"
