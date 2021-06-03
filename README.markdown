@@ -1,6 +1,6 @@
 # Journal
 
-[![Build Status](https://travis-ci.org/uhlig-it/journal.svg?branch=master)](https://travis-ci.org/uhlig-it/journal)
+[![Build Status](https://travis-ci.com/uhlig-it/journal.svg?branch=master)](https://travis-ci.com/uhlig-it/journal)
 
 Simple HTTP server that serves journal entries from a Postgres DB.
 

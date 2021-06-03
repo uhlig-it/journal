@@ -1,9 +1,18 @@
 require 'webdrivers'
 require 'capybara/rspec'
+
 require_relative '../../app'
 
 Capybara.app = Sinatra::Application
-Capybara.default_driver = :selenium_chrome
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    options: Selenium::WebDriver::Chrome::Options.new(
+      args: %w[no-sandbox headless disable-gpu]
+    )
+  )
+end
 
 describe 'new post', type: :feature do
   let(:text) { "#{('a'..'z').to_a.sample(8).join} from #capybara" }
