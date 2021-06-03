@@ -7,7 +7,21 @@ if RACK_ENV.empty? || RACK_ENV != 'production'
   require 'rubocop/rake_task'
 
   RuboCop::RakeTask.new
-  RSpec::Core::RakeTask.new
+
+  namespace :spec do
+    desc 'Run all tests'
+    task all: %w[rubocop:auto_correct unit acceptance]
+
+    desc 'Run ci tests'
+    task ci: ['rubocop', :unit]
+
+    %w[unit acceptance].each do |type|
+      desc "Run #{type} tests"
+      RSpec::Core::RakeTask.new(type) do |t|
+        t.pattern = "spec/#{type}/**/*_spec.rb"
+      end
+    end
+  end
 end
 
 namespace :db do
@@ -47,4 +61,4 @@ namespace :docker do
   end
 end
 
-task default: %w[rubocop spec]
+task default: %w[rubocop spec:all]
