@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   web:
-    image: 'suhlig/journal' # for dev, use "build ." instead
+    image: 'suhlig/journal' # for dev, use "build: ." instead
     ports:
      - "4567:4567"
     environment:
