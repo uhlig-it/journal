@@ -10,7 +10,7 @@ RUN apk add --no-cache                         \
 RUN mkdir /app
 ADD . /app
 WORKDIR /app
-RUN gem install bundler
+
 RUN bundle config --global silence_root_warning 1
 RUN bundle config set --local without 'development test'
 RUN bundle install --jobs 4
