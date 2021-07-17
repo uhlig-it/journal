@@ -11,7 +11,6 @@ RUN mkdir /app
 ADD . /app
 WORKDIR /app
 
-RUN bundle config --global silence_root_warning 1
 RUN bundle config set --local without 'development test'
 RUN bundle install --jobs 4
 
