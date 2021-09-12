@@ -1,0 +1,130 @@
+#!/bin/bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+up() {
+  create-pod
+  start-db
+  wait-for-postgres
+  migrate
+  start-web
+  start-pod
+}
+
+down() {
+  echo >&2 Killing and pruning the pod
+  podman pod kill journal
+  podman pod prune --force
+}
+
+status() {
+  echo >&2 Pods:
+  podman pod ps --filter name=journal
+  echo >&2
+  echo >&2 Containers:
+  podman ps --filter pod=journal
+}
+
+init() {
+  echo >&2 Creating a new podman machine
+  podman machine init
+  podman machine start
+}
+
+create-pod() {
+  echo >&2 Creating the pod
+  podman pod create --publish 4567:4567 --name journal
+}
+
+start-pod() {
+  echo >&2 Starting the pod
+  podman pod start journal
+  echo >&2 Journal is up at http://localhost:4567
+}
+
+start-db() {
+  echo >&2 Starting the database
+  podman container run \
+    --detach \
+    --name=db \
+    --pod=journal \
+    --restart=on-failure \
+    --env POSTGRES_USER=vagrant \
+    --env POSTGRES_PASSWORD=vagrant \
+    --env POSTGRES_DB=journal \
+    docker.io/postgres:alpine
+}
+
+wait-for-postgres() {
+  echo >&2 Waiting for the database to be up
+  podman container run \
+    --name postgres-is-ready \
+    --pod=journal \
+    --add-host db:127.0.0.1 \
+    --rm \
+    --env DB=postgres://vagrant:vagrant@db/journal \
+    docker.io/postgres:alpine \
+    sh -c "timeout 5 sh -c 'until pg_isready --dbname \$DB; do sleep 1; done'"
+}
+
+migrate() {
+  echo >&2 Migrating the database to the latest schema version
+  podman container run \
+    --name=migrate \
+    --pod=journal \
+    --interactive \
+    --tty \
+    --rm \
+    --env DB=postgres://vagrant:vagrant@db/journal \
+    --env RACK_ENV=production \
+    --add-host db:127.0.0.1 \
+    docker.io/suhlig/journal \
+    bundle exec rake db:migrate
+}
+
+start-web() {
+  echo >&2 Starting the web application
+  podman container run \
+    --detach \
+    --name=web \
+    --pod=journal \
+    --restart=on-failure \
+    --env RACK_ENV=production \
+    --env PORT=4567 \
+    --env DB=postgres://vagrant:vagrant@db/journal \
+    --add-host db:127.0.0.1 \
+    docker.io/suhlig/journal
+}
+
+# Starts an interactive psql console connected to db
+psql() {
+  podman container run \
+    --name psql \
+    --pod=journal \
+    --interactive \
+    --tty \
+    --rm \
+    --add-host db:127.0.0.1 \
+    docker.io/postgres:alpine \
+    psql postgres://vagrant:vagrant@db/journal
+}
+
+generate() {
+  echo >&2 Generating Kubernetes Pod YAML
+  mkdir -p k8s
+  podman generate kube journal >k8s/journal.yml
+  echo >&2 Check out k8s/journal.yml and start the pod with
+  echo >&2 podman play kube k8s/journal.yml
+}
+
+if [ $# -ne 0 ]; then
+  "$1" "${@:2}" # call one of the functions defined in this script
+else
+  echo >&2 "Error: Command missing."
+  echo >&2
+  echo >&2 "Usage:"
+  echo >&2
+  echo >&2 "  $(basename "$0") up|down|status|migrate|psql|generate"
+  exit 1
+fi

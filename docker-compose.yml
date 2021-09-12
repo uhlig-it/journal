@@ -1,18 +1,21 @@
-version: '3.8'
+version: "3.8"
 services:
   web:
-    image: 'suhlig/journal' # for dev, use "build: ." instead
+    image: docker.io/suhlig/journal # prod
+    # build: . # dev
     ports:
      - "4567:4567"
     environment:
       RACK_ENV: production
       PORT: 4567
-      DB: "postgres://vagrant:vagrant@db/journal"
+      DB: postgres://vagrant:vagrant@db/journal
     depends_on:
       - db
 
   db:
-    image: 'postgres:alpine'
+    image: docker.io/postgres:alpine
+    ports:
+     - "5432:5432"
     environment:
       POSTGRES_USER: vagrant
       POSTGRES_PASSWORD: vagrant
