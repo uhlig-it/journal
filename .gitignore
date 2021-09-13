@@ -1,3 +1,4 @@
 .bundle
 .cache_rake_t
 pgdata
+.rake_tasks
