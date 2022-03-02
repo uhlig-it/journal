@@ -121,7 +121,7 @@ GEM
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
-    sequel (5.53.0)
+    sequel (5.54.0)
     shellany (0.0.1)
     sinatra (2.2.0)
       mustermann (~> 1.0)
