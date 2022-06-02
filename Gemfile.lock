@@ -130,7 +130,7 @@ GEM
       tilt (~> 2.0)
     thor (1.2.1)
     tilt (2.0.10)
-    tmuxinator (3.0.2)
+    tmuxinator (3.0.3)
       erubis (~> 2.6)
       thor (~> 1.2.1)
       xdg (~> 2.2, >= 2.2.5)
