@@ -10,7 +10,7 @@ if RACK_ENV.empty? || RACK_ENV != 'production'
 
   namespace :spec do
     desc 'Run all tests'
-    task all: %w[rubocop:auto_correct unit acceptance]
+    task all: %w[rubocop:autocorrect unit acceptance]
 
     desc 'Run ci tests'
     task ci: ['rubocop', :unit]
