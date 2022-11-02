@@ -124,7 +124,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sequel (5.61.0)
+    sequel (5.62.0)
     shellany (0.0.1)
     sinatra (3.0.2)
       mustermann (~> 3.0)
